@@ -1,6 +1,9 @@
 package com.app;
 
+import com.app.services.CommandLineParser;
+import com.app.services.CommandLineParserInterface;
 import com.app.services.CookieLogService;
+import com.app.services.CookieLogServiceInterface;
 
 /**
  * The entry point class for the MostActiveCookie application.
@@ -8,7 +11,6 @@ import com.app.services.CookieLogService;
  * The command line arguments are expected to include the file path of the log file and the target date.
  */
 public class MostActiveCookie {
-
     /**
      * Main method to run the MostActiveCookie application.
      * It initializes the {@link CookieLogService} and passes the command line arguments to it
@@ -17,7 +19,8 @@ public class MostActiveCookie {
      * @param args Command line arguments passed to the application, expected to contain the file path and the date.
      */
     public static void main(String[] args) {
-        CookieLogService cookieLogService = new CookieLogService();
+        CommandLineParser parser = new CommandLineParser();
+        CookieLogService cookieLogService = new CookieLogService(parser);
         cookieLogService.processCookies(args);
     }
 }

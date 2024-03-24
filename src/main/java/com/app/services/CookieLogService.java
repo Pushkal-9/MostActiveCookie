@@ -1,5 +1,6 @@
 package com.app.services;
 
+import com.app.objects.ParsedArguments;
 import com.app.utils.SearchUtil;
 
 import java.nio.file.Files;
@@ -8,8 +9,14 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CookieLogService {
+public class CookieLogService implements CookieLogServiceInterface{
     private static final Logger logger = Logger.getLogger(CookieLogService.class.getName());
+    private final CommandLineParserInterface commandLineParser;
+
+    public CookieLogService(CommandLineParser parser) {
+        this.commandLineParser = parser;
+    }
+
 
     /**
      * Processes command line arguments to identify and display the most active cookies for a given date.
@@ -19,8 +26,8 @@ public class CookieLogService {
      */
     public void processCookies(String[] args) {
         try {
-            CommandLineParser parser = new CommandLineParser(args);
-            List<String> mostActiveCookies = findMostActiveCookies(parser.getFilePath(), parser.getDate());
+            ParsedArguments parsedArguments = commandLineParser.parse(args);
+            List<String> mostActiveCookies = findMostActiveCookies(parsedArguments.getFilePath(), parsedArguments.getDate());
             mostActiveCookies.forEach(System.out::println);
         } catch (IllegalArgumentException e) {
             logger.severe(e.getMessage());
