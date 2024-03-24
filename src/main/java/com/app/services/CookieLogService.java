@@ -13,7 +13,7 @@ public class CookieLogService implements CookieLogServiceInterface{
     private static final Logger logger = Logger.getLogger(CookieLogService.class.getName());
     private final CommandLineParserInterface commandLineParser;
 
-    public CookieLogService(CommandLineParser parser) {
+    public CookieLogService(CommandLineParserInterface parser) {
         this.commandLineParser = parser;
     }
 
@@ -44,7 +44,7 @@ public class CookieLogService implements CookieLogServiceInterface{
      * @param date The date for which to find the most active cookies, in yyyy-MM-dd format.
      * @return A list of the most active cookies for the given date. Returns an empty list if an error occurs.
      */
-    public List<String> findMostActiveCookies(String filePath, String date) {
+    private List<String> findMostActiveCookies(String filePath, String date) {
         try {
             List<String> logLines = readLogLines(filePath);
             Map<String, Integer> cookieCount = countCookieOccurrences(logLines, date);
@@ -63,7 +63,7 @@ public class CookieLogService implements CookieLogServiceInterface{
      * @param date The date for which to count cookie occurrences, in yyyy-MM-dd format.
      * @return A map with cookies as keys and their occurrence count as values.
      */
-    public Map<String, Integer> countCookieOccurrences(List<String> logLines, String date) {
+    private Map<String, Integer> countCookieOccurrences(List<String> logLines, String date) {
         Map<String, Integer> cookieCount = new HashMap<>();
         int startIndex = SearchUtil.findStartIndex(logLines, date);
         int endIndex = SearchUtil.findEndIndex(logLines, date);
@@ -86,7 +86,7 @@ public class CookieLogService implements CookieLogServiceInterface{
      * @param cookieCount A map with cookies as keys and their occurrence count as values.
      * @return The highest occurrence count found among the cookies.
      */
-    public int findMaxOccurrence(Map<String, Integer> cookieCount) {
+    private int findMaxOccurrence(Map<String, Integer> cookieCount) {
         int maxCount = 0;
         for (int count : cookieCount.values()) {
             if (count > maxCount) {
@@ -103,7 +103,7 @@ public class CookieLogService implements CookieLogServiceInterface{
      * @param maxCount The highest occurrence count to filter the most active cookies.
      * @return A list of cookies that have the maximum occurrence count.
      */
-    public List<String> collectMostActiveCookies(Map<String, Integer> cookieCount, int maxCount) {
+    private List<String> collectMostActiveCookies(Map<String, Integer> cookieCount, int maxCount) {
         List<String> mostActiveCookies = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : cookieCount.entrySet()) {
             if (entry.getValue() == maxCount) {
@@ -120,7 +120,7 @@ public class CookieLogService implements CookieLogServiceInterface{
      * @return A list of strings, each representing a line in the file.
      * @throws Exception If an error occurs during file reading.
      */
-    public List<String> readLogLines(String filePath) throws Exception {
+    private List<String> readLogLines(String filePath) throws Exception {
         return Files.readAllLines(Paths.get(filePath));
     }
 }
