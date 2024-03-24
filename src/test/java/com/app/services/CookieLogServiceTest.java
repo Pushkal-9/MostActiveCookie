@@ -22,12 +22,11 @@ public class CookieLogServiceTest {
     private final PrintStream originalOut = System.out;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private CookieLogService cookieLogService;
-    private CommandLineParser parser;
 
     @BeforeEach
     public void setUp() {
-        parser = new CommandLineParser();
-        cookieLogService = new CookieLogService(parser);
+        CommandLineParser parser = new DefaultCommandLineParser();
+        cookieLogService = new CookieLogServiceImpl(parser);
         System.setOut(new PrintStream(outContent));
         Logger.getLogger(CookieLogService.class.getName()).setLevel(Level.OFF); // Turn off logging for testing
     }

@@ -1,9 +1,9 @@
 package com.app;
 
 import com.app.services.CommandLineParser;
-import com.app.services.CommandLineParserInterface;
 import com.app.services.CookieLogService;
-import com.app.services.CookieLogServiceInterface;
+import com.app.services.CookieLogServiceImpl;
+import com.app.services.DefaultCommandLineParser;
 
 /**
  * The entry point class for the MostActiveCookie application.
@@ -19,8 +19,8 @@ public class MostActiveCookie {
      * @param args Command line arguments passed to the application, expected to contain the file path and the date.
      */
     public static void main(String[] args) {
-        CommandLineParser parser = new CommandLineParser();
-        CookieLogService cookieLogService = new CookieLogService(parser);
+        CommandLineParser parser = new DefaultCommandLineParser();
+        CookieLogService cookieLogService = new CookieLogServiceImpl(parser);
         cookieLogService.processCookies(args);
     }
 }
