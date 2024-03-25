@@ -29,5 +29,12 @@ public class CommandLineParserTest {
         CommandLineParser parser = new DefaultCommandLineParser();
         Assertions.assertThrows(IllegalArgumentException.class, () -> parser.parse(args));
     }
+
+    @Test
+    public void testInvalidDateFormat() {
+        String[] args = {"path/to/file.csv", "-d", "2021/12/09"}; // Incorrect date format
+        CommandLineParser parser = new DefaultCommandLineParser();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> parser.parse(args));
+    }
 }
 

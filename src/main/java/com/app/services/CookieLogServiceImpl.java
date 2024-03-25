@@ -27,6 +27,7 @@ public class CookieLogServiceImpl implements CookieLogService{
     public void processCookies(String[] args) {
         try {
             ParsedArguments parsedArguments = commandLineParser.parse(args);
+
             List<String> mostActiveCookies = findMostActiveCookies(parsedArguments.getFilePath(), parsedArguments.getDate());
             mostActiveCookies.forEach(System.out::println);
         } catch (IllegalArgumentException e) {
