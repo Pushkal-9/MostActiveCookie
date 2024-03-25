@@ -44,7 +44,7 @@ public class CookieLogServiceImpl implements CookieLogService{
      * @param date The date for which to find the most active cookies, in yyyy-MM-dd format.
      * @return A list of the most active cookies for the given date. Returns an empty list if an error occurs.
      */
-    private List<String> findMostActiveCookies(String filePath, String date) {
+    public List<String> findMostActiveCookies(String filePath, String date) {
         try {
             List<String> logRecords = readLogRecords(filePath);
             Map<String, Integer> cookieCount = countCookieOccurrences(logRecords, date);
