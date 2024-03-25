@@ -28,7 +28,7 @@ public class CookieLogServiceTest {
         CommandLineParser parser = new DefaultCommandLineParser();
         cookieLogService = new CookieLogServiceImpl(parser);
         System.setOut(new PrintStream(outContent));
-        Logger.getLogger(CookieLogService.class.getName()).setLevel(Level.OFF); // Turn off logging for testing
+        Logger.getLogger(CookieLogService.class.getName()).setLevel(Level.OFF);
     }
 
     @AfterEach
