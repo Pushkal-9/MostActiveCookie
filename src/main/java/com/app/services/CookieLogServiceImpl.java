@@ -46,8 +46,8 @@ public class CookieLogServiceImpl implements CookieLogService{
      */
     private List<String> findMostActiveCookies(String filePath, String date) {
         try {
-            List<String> logLines = readLogLines(filePath);
-            Map<String, Integer> cookieCount = countCookieOccurrences(logLines, date);
+            List<String> logRecords = readLogRecords(filePath);
+            Map<String, Integer> cookieCount = countCookieOccurrences(logRecords, date);
             int maxCount = findMaxOccurrence(cookieCount);
             return collectMostActiveCookies(cookieCount, maxCount);
         } catch (Exception e) {
@@ -59,19 +59,19 @@ public class CookieLogServiceImpl implements CookieLogService{
     /**
      * Counts occurrences of each cookie in the log lines for a specific date.
      *
-     * @param logLines A list of log lines from the log file.
+     * @param logRecords A list of log lines from the log file.
      * @param date The date for which to count cookie occurrences, in yyyy-MM-dd format.
      * @return A map with cookies as keys and their occurrence count as values.
      */
-    private Map<String, Integer> countCookieOccurrences(List<String> logLines, String date) {
+    private Map<String, Integer> countCookieOccurrences(List<String> logRecords, String date) {
         Map<String, Integer> cookieCount = new HashMap<>();
-        int startIndex = SearchUtil.findStartIndex(logLines, date);
-        int endIndex = SearchUtil.findEndIndex(logLines, date);
+        int startIndex = SearchUtil.findStartIndex(logRecords, date);
+        int endIndex = SearchUtil.findEndIndex(logRecords, date);
 
         if (startIndex == -1 || endIndex == -1) return cookieCount;
 
         for (int i = startIndex; i <= endIndex; i++) {
-            String line = logLines.get(i);
+            String line = logRecords.get(i);
             String[] parts = line.split(",");
             String cookie = parts[0];
             cookieCount.put(cookie, cookieCount.getOrDefault(cookie, 0) + 1);
@@ -120,7 +120,7 @@ public class CookieLogServiceImpl implements CookieLogService{
      * @return A list of strings, each representing a line in the file.
      * @throws Exception If an error occurs during file reading.
      */
-    private List<String> readLogLines(String filePath) throws Exception {
+    private List<String> readLogRecords(String filePath) throws Exception {
         return Files.readAllLines(Paths.get(filePath));
     }
 }
