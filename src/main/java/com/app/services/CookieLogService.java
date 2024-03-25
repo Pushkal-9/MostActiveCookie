@@ -1,5 +1,7 @@
 package com.app.services;
 
+import java.util.List;
+
 public interface CookieLogService {
     /**
      * Processes cookie data from a log file and performs operations such as identifying the most active cookie.
@@ -8,5 +10,6 @@ public interface CookieLogService {
      *             This might include the file path of the log and the date for which the analysis is to be performed.
      */
     void processCookies(String[] args);
+    List<String> findMostActiveCookies(String filePath, String date);
 }
 
